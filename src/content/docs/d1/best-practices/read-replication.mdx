@@ -14,9 +14,9 @@ Your application can use read replicas with D1 [Sessions API](/d1/worker-api/d1-
 
 To checkout D1 read replication and Sessions API:
 
-1.  Deploy the following Worker code, which will prompt you to create a D1 database.
+1. Deploy the following Worker code, which will prompt you to create a D1 database.
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/lambrospetrou/d1-starter-sessions-api)
+   [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/lambrospetrou/d1-starter-sessions-api)
 
 2. Enable read replication on the just created D1 database:
 
@@ -24,7 +24,7 @@ To checkout D1 read replication and Sessions API:
 curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account_id}/d1/database/{database_id}" \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
-  -d "{"read_replication": {"mode": "auto"}}"
+  -d '{"read_replication": {"mode": "auto"}}'
 ```
 
 ```ts collapse={1-6, 34-130}
@@ -200,7 +200,7 @@ Use an [API token](/fundamentals/api/get-started/create-token/) with `D1:Edit` [
 curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account_id}/d1/database/{database_id}" \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
-  -d "{"read_replication": {"mode": "auto"}}"
+  -d '{"read_replication": {"mode": "auto"}}'
 ```
 </TabItem><TabItem label="TypeScript">
 ```ts
@@ -231,7 +231,7 @@ Use an [API token](/fundamentals/api/get-started/create-token/) with `D1:Edit` [
 curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account_id}/d1/database/{database_id}" \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
-  -d "{"read_replication": {"mode": "disabled"}}"
+  -d '{"read_replication": {"mode": "disabled"}}'
 ```
 </TabItem><TabItem label="TypeScript">
 ```ts
@@ -252,12 +252,12 @@ await fetch ("/v4/accounts/{account_id}/d1/database/{database_id}", {
 </Tabs>
 
 :::note
-Disabling read replication takes 24 hours for replicas to stop processing requests.  
+Disabling read replication takes 24 hours for replicas to stop processing requests.
 :::
 
 ### Check if read replication is enabled
 
-`GET` D1 database REST endpoint returns if read replication is enabled or disabled. 
+`GET` D1 database REST endpoint returns if read replication is enabled or disabled.
 Use an [API token](/fundamentals/api/get-started/create-token/) with `D1:Read` [permission](/fundamentals/api/reference/permissions/#account-permissions).
 
 <Tabs>
@@ -332,7 +332,7 @@ To create a Session from the latest database version, use `withSession("first-pr
 ```ts
 const session = env.DB.withSession(`first-primary`) // synchronous
 // query executes on primary database
-const result = await session 
+const result = await session
 	.prepare(`SELECT * FROM Customers WHERE CompanyName = 'Bs Beverages'`)
 	.run()
 ```
@@ -483,7 +483,7 @@ export default {
 
 ### Check where D1 request was processed
 
-To see how D1 requests are processed by the addition of read replicas, `served_by_region` and `served_by_primary` fields are returned in the `meta` object of [D1 Result](/d1/worker-api/return-object/#d1result). 
+To see how D1 requests are processed by the addition of read replicas, `served_by_region` and `served_by_primary` fields are returned in the `meta` object of [D1 Result](/d1/worker-api/return-object/#d1result).
 
 ```ts
 const result = await env.DB.withSession()
