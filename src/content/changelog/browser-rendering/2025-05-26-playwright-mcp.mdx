@@ -6,6 +6,10 @@ products:
 date: 2025-05-26T17:00:00Z
 ---
 
+import {
+	PackageManagers,
+} from "~/components";
+
 We're excited to share that you can now use the [Playwright MCP](https://github.com/cloudflare/playwright-mcp) server with Browser Rendering.
 
 Once you [deploy the server](/browser-rendering/platform/playwright-mcp/#deploying), you can use any MCP client with it to interact with Browser Rendering. This allows you to run AI models that can automate browser tasks, such as taking screenshots, filling out forms, or scraping data.
@@ -14,9 +18,7 @@ Once you [deploy the server](/browser-rendering/platform/playwright-mcp/#deployi
 
 Playwright MCP is available as an npm package at [`@cloudflare/playwright-mcp`](https://www.npmjs.com/package/@cloudflare/playwright-mcp). To install it, type:
 
-```bash
-npm install @cloudflare/playwright-mcp --save-dev
-```
+<PackageManagers pkg="@cloudflare/playwright-mcp" dev />
 
 Deploying the server is then as easy as:
 
