@@ -1,15 +1,29 @@
-releaseNotes: >-
-  This release contains a hotfix for [managed networks](/cloudflare-one/connections/connect-devices/warp/configure-warp/managed-networks/) for the 2025.4.929.0
-  release.
-
+releaseNotes: |-
+  This release contains a hotfix for [managed networks](/cloudflare-one/connections/connect-devices/warp/configure-warp/managed-networks/) for the 2025.4.929.0 release.
 
   **Changes and improvements**
-
-  - Fixed an issue where it could take up to 3 minutes for the correct device profile
-  to be applied in some circumstances. In the worst case, it should now only
-  take up to 40 seconds. This will be improved further in a future release.
+  - Fixed an issue where it could take up to 3 minutes for the correct device profile to be applied in some circumstances. In the worst case, it should now only take up to 40 seconds. This will be improved further in a future release.
 version: 2025.4.943.0
 releaseDate: 2025-05-22T19:22:32.439Z
 packageURL: https://downloads.cloudflareclient.com/v1/download/noble-intel/version/2025.4.943.0
 packageSize: 45531930
 platformName: Linux
+linuxPlatforms:
+  - bullseye-intel
+  - buster-arm
+  - focal-arm
+  - jammy-arm
+  - centos8-arm
+  - noble-intel
+  - bookworm-arm
+  - centos8-intel
+  - focal-intel
+  - fedora35-intel
+  - bullseye-arm
+  - fedora34-intel
+  - fedora34-arm
+  - bookworm-intel
+  - jammy-intel
+  - fedora35-arm
+  - buster-intel
+  - noble-arm

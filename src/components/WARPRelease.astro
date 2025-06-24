@@ -14,6 +14,53 @@ const props = z.object({
 });
 
 const { header, open, release } = props.parse(Astro.props);
+
+const getPrettyLinuxName = (platform: string) => {
+	switch (platform) {
+		case "noble-intel":
+			return "Ubuntu Noble (Intel)";
+		case "noble-arm":
+			return "Ubuntu Noble (Arm)";
+		case "jammy-intel":
+			return "Ubuntu Jammy (Intel)";
+		case "jammy-arm":
+			return "Ubuntu Jammy (Arm)";
+		case "focal-intel":
+			return "Ubuntu Focal (Intel)";
+		case "focal-arm":
+			return "Ubuntu Focal (Arm)";
+		case "buster-intel":
+			return "Debian Buster (Intel)";
+		case "buster-arm":
+			return "Ubuntu Buster (Arm)";
+		case "bullseye-intel":
+			return "Debian Bullseye (Intel)";
+		case "bullseye-arm":
+			return "Debian Bullseye (Arm)";
+		case "bookworm-intel":
+			return "Debian Bookworm (Intel)";
+		case "bookworm-arm":
+			return "Debian Bookworm (Arm)";
+		case "centos8-intel":
+			return "Centos 8 (Intel)";
+		case "centos8-arm":
+			return "Centos 8 (Arm)";
+		case "fedora34-intel":
+			return "Fedora 34 (Intel)";
+		case "fedora34-arm":
+			return "Fedora 34 (Arm)";
+		case "fedora35-intel":
+			return "Fedora 35 (Intel)";
+		case "fedora35-arm":
+			return "Fedora 35 (Arm)";
+		default:
+			return platform;
+	}
+};
+
+release.linuxPlatforms?.sort((a, b) => {
+	return getPrettyLinuxName(a).localeCompare(getPrettyLinuxName(b));
+});
 ---
 
 <Details header={header} open={open}>
@@ -37,8 +84,28 @@ const { header, open, release } = props.parse(Astro.props);
 				)
 			}
 		</div>
+	</p>
+	<p>
 		<span>
-			<a href={release.packageURL}>Download</a>
+			{
+				release.linuxPlatforms ? (
+					<warp-linux-downloads data-version={release.version}>
+						<select>
+							{release.linuxPlatforms.map((platform) => (
+								<option value={platform}>{getPrettyLinuxName(platform)}</option>
+							))}
+						</select>
+						<a
+							class="inline-block"
+							href={`https://downloads.cloudflareclient.com/v1/download/${release.linuxPlatforms[0]}/version/${release.version}`}
+						>
+							Download
+						</a>
+					</warp-linux-downloads>
+				) : (
+					<a href={release.packageURL}>Download</a>
+				)
+			}
 		</span>
 	</p>
 	<p>
@@ -48,3 +115,25 @@ const { header, open, release } = props.parse(Astro.props);
 		<Fragment set:html={marked.parse(release.releaseNotes)} />
 	</p>
 </Details>
+
+<script>
+	class WarpLinuxDownloads extends HTMLElement {
+		connectedCallback() {
+			const dropdown = this.querySelector<HTMLSelectElement>("select");
+
+			dropdown?.addEventListener("change", () => {
+				console.log("change");
+				const platform = dropdown?.value;
+				const download = this.querySelector<HTMLAnchorElement>("a");
+
+				console.log(download);
+				download?.setAttribute(
+					"href",
+					`https://downloads.cloudflareclient.com/v1/download/${platform}/version/${this.dataset.version}`,
+				);
+			});
+		}
+	}
+
+	customElements.define("warp-linux-downloads", WarpLinuxDownloads);
+</script>
