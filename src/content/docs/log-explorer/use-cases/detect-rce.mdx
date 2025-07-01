@@ -1,0 +1,22 @@
+---
+pcx_content_type: how-to
+title: Detect Remote Code Execution attacks with Custom Dashboards 
+sidebar:
+  order: 1
+  sidebar:
+  label: Detect Remote Code Execution
+---
+
+Monitor for high-risk threats like Remote Code Execution (RCE) by building custom dashboards that combine multiple security signals.
+
+## Approach
+
+Create a custom dashboard that visualizes RCE attack detections surfaced by Cloudflare’s Web Application Firewall (WAF). Enhance visibility by incorporating auxiliary data streams such as:
+
+- Malicious content upload events
+- JA3/JA4 TLS fingerprint anomalies
+- Unusual source IP clusters
+
+## Outcome
+
+This integrated view enables rapid detection of potential compromise scenarios where an attacker may be executing arbitrary commands on exposed hosts. By correlating across these datasets, teams can confidently escalate incidents involving malware propagation or lateral movement—critical for reducing dwell time and mitigating broader system impact.
