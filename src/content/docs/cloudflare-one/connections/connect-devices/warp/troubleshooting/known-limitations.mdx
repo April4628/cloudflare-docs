@@ -100,7 +100,7 @@ or create a Docker network with a working MTU value:
 docker network create -o "com.docker.network.driver.mtu=1420" my-docker-network
 ```
 
-The MTU value should be set to the MTU of your host's default interface minus 80 bytes for the WARP protocol overhead. Most MTUs are 1500, so 1420 should work for most users. 
+The MTU value should be set to the MTU of your host's default interface minus 80 bytes for the WARP protocol overhead. Most MTUs are 1500, so 1420 should work for most users.
 
 ## Access WARP DNS from Docker
 
@@ -121,7 +121,7 @@ Address:        8.8.8.8:53
 
 ** server can't find connectivity-check.warp-svc.: NXDOMAIN
 ** server can't find connectivity-check.warp-svc.: NXDOMAIN
- 
+
 # Create a bridge network called demo
 ❯ docker network create demo
 e1e1943a6995a7e8c115a1c60357fe64f87a3ae90074ce6e4c3f0d2bba3fa892
@@ -156,6 +156,16 @@ Address: 127.0.2.3
 ## Windows 10 in Microsoft 365 Cloud PC is not supported
 
 Use of the WARP client in a Microsoft 365 Windows 10 Cloud PC is not supported. To work around this limitation, use Windows 11.
+
+## IPv6 DNS Resolution in Secure Web Gateway without DNS filtering mode
+
+In [Secure Web Gateway without DNS filtering](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering) mode, after the WARP tunnel is established, WARP checks connectivity by resolving `connectivity.cloudflareclient.com` using the DNS server configured on the device.
+
+Sometimes this check fails because the DNS server—often assigned by DHCP and accessible only on the local network—becomes unreachable when traffic is routed through the WARP tunnel.
+
+For IPv4, failure is uncommon because DHCP-assigned DNS servers typically use private (RFC 1918) addresses, which WARP excludes from the tunnel by default.
+
+However, in an IPv6 environment, there is no automatic exclusion. If your DNS server uses an IPv6 address, you must manually exclude it from WARP’s tunnel using [split tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) settings for Secure Web Gateway without DNS filtering mode to work properly.
 
 ## Troubleshooting
 
