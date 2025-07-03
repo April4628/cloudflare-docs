@@ -47,6 +47,10 @@ Gateway sorts applications into the following app type groups:
 
 ## Usage
 
+### Overlapping hostnames
+
+The hostnames used to match applications may match multiple known applications. For example, both the Facebook and Facebook Messenger apps use the `chat-e2ee.facebook.com` hostname. When logging traffic to the Facebook Messenger app, Gateway will match and log both the Facebook and Facebook Messenger apps. When you use the Application selector in Gateway policies, actions will be limited to the specific application defined.
+
 ### Do Not Inspect applications
 
 Gateway automatically groups applications incompatible with TLS decryption into the _Do Not Inspect_ app type. As Cloudflare identifies incompatible applications, Gateway will periodically update this app type to add new applications. To ensure Gateway does not intercept any current or future incompatible traffic, you can [create a Do Not Inspect HTTP policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) with the entire _Do Not Inspect_ app type selected.
