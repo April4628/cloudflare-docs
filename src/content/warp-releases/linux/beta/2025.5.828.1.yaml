@@ -29,20 +29,20 @@ packageURL: https://downloads.cloudflareclient.com/v1/download/fedora35-arm/vers
 packageSize: 46328458
 platformName: Linux
 linuxPlatforms:
-  - bullseye-arm
-  - buster-intel
-  - focal-arm
-  - fedora34-intel
-  - jammy-intel
-  - bookworm-arm
-  - buster-arm
-  - fedora35-intel
-  - bookworm-intel
-  - focal-intel
-  - bullseye-intel
-  - centos8-intel
-  - centos8-arm
-  - fedora34-arm
-  - jammy-arm
-  - fedora35-arm
-  - noble-arm
+  fedora34-arm: 46728884
+  buster-intel: 45322742
+  focal-intel: 45234594
+  fedora34-intel: 47828110
+  fedora35-arm: 46328458
+  fedora35-intel: 47520289
+  jammy-arm: 43688108
+  jammy-intel: 44948160
+  centos8-intel: 47429876
+  bullseye-arm: 43912656
+  buster-arm: 44001944
+  bookworm-arm: 43672848
+  noble-arm: 44060646
+  focal-arm: 43982934
+  centos8-arm: 46656662
+  bookworm-intel: 44940678
+  bullseye-intel: 45148134

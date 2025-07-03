@@ -1,0 +1,82 @@
+[
+	{
+		"platform": "macos",
+		"display_name": "macOS"
+	},
+	{
+		"platform": "windows",
+		"display_name": "Windows"
+	},
+	{
+		"platform": "noble-intel",
+		"display_name": "Ubuntu Noble (Intel)"
+	},
+	{
+		"platform": "noble-arm",
+		"display_name": "Ubuntu Noble (Arm)"
+	},
+	{
+		"platform": "jammy-intel",
+		"display_name": "Ubuntu Jammy (Intel)"
+	},
+	{
+		"platform": "jammy-arm",
+		"display_name": "Ubuntu Jammy (Arm)"
+	},
+	{
+		"platform": "focal-intel",
+		"display_name": "Ubuntu Focal (Intel)"
+	},
+	{
+		"platform": "focal-arm",
+		"display_name": "Ubuntu Focal (Arm)"
+	},
+	{
+		"platform": "buster-intel",
+		"display_name": "Debian Buster (Intel)"
+	},
+	{
+		"platform": "buster-arm",
+		"display_name": "Debian Buster (Arm)"
+	},
+	{
+		"platform": "bullseye-intel",
+		"display_name": "Debian Bullseye (Intel)"
+	},
+	{
+		"platform": "bullseye-arm",
+		"display_name": "Debian Bullseye (Arm)"
+	},
+	{
+		"platform": "bookworm-intel",
+		"display_name": "Debian Bookworm (Intel)"
+	},
+	{
+		"platform": "bookworm-arm",
+		"display_name": "Debian Bookworm (Arm)"
+	},
+	{
+		"platform": "centos8-intel",
+		"display_name": "CentOS 8 (Intel)"
+	},
+	{
+		"platform": "centos8-arm",
+		"display_name": "CentOS 8 (Arm)"
+	},
+	{
+		"platform": "fedora34-intel",
+		"display_name": "Fedora 34 (Intel)"
+	},
+	{
+		"platform": "fedora34-arm",
+		"display_name": "Fedora 34 (Arm)"
+	},
+	{
+		"platform": "fedora35-intel",
+		"display_name": "Fedora 35 (Intel)"
+	},
+	{
+		"platform": "fedora35-arm",
+		"display_name": "Fedora 35 (Arm)"
+	}
+]

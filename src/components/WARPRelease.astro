@@ -4,6 +4,7 @@ import { marked } from "marked";
 import { z } from "astro:schema";
 import prettyBytes from "pretty-bytes";
 import { warpReleasesSchema } from "~/schemas";
+import platforms from "~/util/warp-platforms.json";
 
 type Props = z.infer<typeof props>;
 
@@ -16,124 +17,106 @@ const props = z.object({
 const { header, open, release } = props.parse(Astro.props);
 
 const getPrettyLinuxName = (platform: string) => {
-	switch (platform) {
-		case "noble-intel":
-			return "Ubuntu Noble (Intel)";
-		case "noble-arm":
-			return "Ubuntu Noble (Arm)";
-		case "jammy-intel":
-			return "Ubuntu Jammy (Intel)";
-		case "jammy-arm":
-			return "Ubuntu Jammy (Arm)";
-		case "focal-intel":
-			return "Ubuntu Focal (Intel)";
-		case "focal-arm":
-			return "Ubuntu Focal (Arm)";
-		case "buster-intel":
-			return "Debian Buster (Intel)";
-		case "buster-arm":
-			return "Ubuntu Buster (Arm)";
-		case "bullseye-intel":
-			return "Debian Bullseye (Intel)";
-		case "bullseye-arm":
-			return "Debian Bullseye (Arm)";
-		case "bookworm-intel":
-			return "Debian Bookworm (Intel)";
-		case "bookworm-arm":
-			return "Debian Bookworm (Arm)";
-		case "centos8-intel":
-			return "Centos 8 (Intel)";
-		case "centos8-arm":
-			return "Centos 8 (Arm)";
-		case "fedora34-intel":
-			return "Fedora 34 (Intel)";
-		case "fedora34-arm":
-			return "Fedora 34 (Arm)";
-		case "fedora35-intel":
-			return "Fedora 35 (Intel)";
-		case "fedora35-arm":
-			return "Fedora 35 (Arm)";
-		default:
-			return platform;
+	const platformInfo = platforms.find(p => p.platform === platform);
+
+	if (platformInfo) {
+		return platformInfo.display_name;
 	}
+
+	return platform;
 };
 
-release.linuxPlatforms?.sort((a, b) => {
-	return getPrettyLinuxName(a).localeCompare(getPrettyLinuxName(b));
-});
+const sortedPlatforms = Object.entries(release.linuxPlatforms ?? {}).sort(
+	(a, b) => {
+		return getPrettyLinuxName(a[0]).localeCompare(getPrettyLinuxName(b[0]));
+	},
+);
 ---
 
 <Details header={header} open={open}>
-	<p>
-		<div class="flex gap-2">
+	<warp-download data-version={release.version} data-platforms={JSON.stringify(sortedPlatforms)}>
+		<p>
+			<div class="flex gap-2">
+				<span>
+					<strong>Version: </strong>
+					{release.platformName}
+					{release.version}
+				</span>
+				<span>
+					<strong>Date: </strong>
+					{release.releaseDate.toISOString().split("T")[0]}
+				</span>
+				{
+					release.packageSize && (
+						<span>
+							<strong>Size: </strong>
+							<span data-size>{prettyBytes(release.packageSize)}</span>
+						</span>
+					)
+				}
+			</div>
+		</p>
+		<p>
 			<span>
-				<strong>Version: </strong>
-				{release.platformName}
-				{release.version}
+				{
+					release.linuxPlatforms ? (
+							<select>
+								{sortedPlatforms.map(([platform]) => (
+									<option value={platform}>
+										{getPrettyLinuxName(platform)}
+									</option>
+								))}
+							</select>
+							<a
+								class="inline-block"
+								data-linux-download
+								href={`https://downloads.cloudflareclient.com/v1/download/${release.linuxPlatforms[0]}/version/${release.version}`}
+							>
+								Download
+							</a>
+					) : (
+						<a href={release.packageURL}>Download</a>
+					)
+				}
 			</span>
+		</p>
+		<p>
 			<span>
-				<strong>Date: </strong>
-				{release.releaseDate.toISOString().split("T")[0]}
+				<h4>Release notes</h4>
 			</span>
-			{
-				release.packageSize && (
-					<span>
-						<strong>Size: </strong>
-						{prettyBytes(release.packageSize)}
-					</span>
-				)
-			}
-		</div>
-	</p>
-	<p>
-		<span>
-			{
-				release.linuxPlatforms ? (
-					<warp-linux-downloads data-version={release.version}>
-						<select>
-							{release.linuxPlatforms.map((platform) => (
-								<option value={platform}>{getPrettyLinuxName(platform)}</option>
-							))}
-						</select>
-						<a
-							class="inline-block"
-							href={`https://downloads.cloudflareclient.com/v1/download/${release.linuxPlatforms[0]}/version/${release.version}`}
-						>
-							Download
-						</a>
-					</warp-linux-downloads>
-				) : (
-					<a href={release.packageURL}>Download</a>
-				)
-			}
-		</span>
-	</p>
-	<p>
-		<span>
-			<h4>Release notes</h4>
-		</span>
-		<Fragment set:html={marked.parse(release.releaseNotes)} />
-	</p>
+			<Fragment set:html={marked.parse(release.releaseNotes)} />
+		</p>
+	</warp-download>
 </Details>
 
 <script>
-	class WarpLinuxDownloads extends HTMLElement {
+	import prettyBytes from "pretty-bytes";
+
+	class WarpDownload extends HTMLElement {
 		connectedCallback() {
+			const platforms = JSON.parse(this.dataset.platforms as string);
+
 			const dropdown = this.querySelector<HTMLSelectElement>("select");
 
 			dropdown?.addEventListener("change", () => {
-				console.log("change");
 				const platform = dropdown?.value;
-				const download = this.querySelector<HTMLAnchorElement>("a");
 
-				console.log(download);
+				const download = this.querySelector<HTMLAnchorElement>("a[data-linux-download]");
+				const size = this.querySelector<HTMLSpanElement>("span[data-size]");
+
 				download?.setAttribute(
 					"href",
 					`https://downloads.cloudflareclient.com/v1/download/${platform}/version/${this.dataset.version}`,
 				);
+
+				if (size) {
+					const platformInfo = platforms.find(([p]: [string, number]) => p === platform);
+
+					size.textContent = prettyBytes(Number(platformInfo?.[1] ?? 0));
+				}
 			});
 		}
 	}
 
-	customElements.define("warp-linux-downloads", WarpLinuxDownloads);
+	customElements.define("warp-download", WarpDownload);
 </script>

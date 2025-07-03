@@ -1,0 +1,34 @@
+releaseNotes: |-
+  This release contains improvements and new exciting features, including [post-quantum cryptography](http://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/#enable_post_quantum). By tunnelling your corporate network traffic over Cloudflare, you can now gain the immediate [protection of post-quantum cryptography](https://blog.cloudflare.com/pq-2024/) without needing to upgrade any of your individual corporate applications or systems.
+
+  **Changes and improvements**
+  - Fixed a device registration issue causing WARP connection failures when changing networks.
+  - Captive portal improvements and fixes. Captive portal sign in notifications will now be sent through operating system notification services. Fix for firewall configuration issue affecting clients in DoH only mode.
+  - Improved the connectivity status message in the client GUI.
+  - The WARP client now applies post-quantum cryptography end-to-end on enabled devices accessing resources behind a Cloudflare Tunnel. This feature can be enabled by MDM.
+  - Improvement to handle client configuration changes made by MDM during disconnection upon reconnection.
+  - Fixed an issue affecting split tunnel include mode, where traffic outside the tunnel was blocked when switching between Wifi and ethernet networks.
+version: 2025.5.893.0
+releaseDate: 2025-06-30T19:44:35.273Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/focal-intel/version/2025.5.893.0
+packageSize: 45241412
+platformName: Linux
+linuxPlatforms:
+  bookworm-arm: 43683734
+  bullseye-arm: 43921012
+  bullseye-intel: 45157598
+  jammy-arm: 43698840
+  buster-intel: 45330130
+  centos8-arm: 46519510
+  focal-intel: 45241412
+  focal-arm: 43987292
+  jammy-intel: 44954550
+  noble-intel: 44788578
+  centos8-intel: 47444252
+  fedora35-intel: 47529176
+  fedora34-intel: 47835020
+  fedora34-arm: 46732148
+  bookworm-intel: 44948710
+  noble-arm: 44061636
+  buster-arm: 44005728
+  fedora35-arm: 46342283

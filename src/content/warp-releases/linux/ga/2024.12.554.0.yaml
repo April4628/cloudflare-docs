@@ -17,4 +17,4 @@ releaseDate: 2024-12-19
 packageURL: https://pkg.cloudflareclient.com/
 platformName: Linux
 linuxPlatforms:
-  - noble-intel
+  noble-intel: 44462470

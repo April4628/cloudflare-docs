@@ -8,10 +8,16 @@ export const warpReleasesSchema = z
 		packageSize: z.number().optional(),
 		packageURL: z.string(),
 		platformName: z.enum(["Windows", "macOS", "Linux"]),
-		linuxPlatforms: z.array(z.string()).optional(),
+		linuxPlatforms: z.record(z.string(), z.number()).optional(),
 	})
 	.refine(
 		(val) => {
+			if (val.platformName === "Linux") {
+				if (!val.linuxPlatforms) {
+					console.log(val.version);
+				}
+			}
+
 			if (val.platformName !== "Linux" && !val.packageSize) return false;
 			if (val.platformName === "Linux" && !val.linuxPlatforms) return false;
 

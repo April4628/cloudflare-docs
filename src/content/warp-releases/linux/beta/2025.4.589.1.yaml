@@ -13,21 +13,21 @@ packageURL: https://downloads.cloudflareclient.com/v1/download/noble-intel/versi
 packageSize: 45489326
 platformName: Linux
 linuxPlatforms:
-  - fedora35-arm
-  - bullseye-arm
-  - buster-intel
-  - focal-arm
-  - fedora34-intel
-  - jammy-intel
-  - bookworm-arm
-  - buster-arm
-  - fedora35-intel
-  - bookworm-intel
-  - focal-intel
-  - bullseye-intel
-  - centos8-intel
-  - noble-intel
-  - centos8-arm
-  - fedora34-arm
-  - jammy-arm
-  - noble-arm
+  noble-intel: 45489326
+  fedora34-arm: 47398622
+  buster-intel: 46012030
+  focal-intel: 45948596
+  fedora34-intel: 48515297
+  fedora35-arm: 47039916
+  fedora35-intel: 48234480
+  jammy-arm: 44396184
+  jammy-intel: 45625680
+  centos8-intel: 48112596
+  bullseye-arm: 44630670
+  buster-arm: 44689650
+  bookworm-arm: 44384136
+  noble-arm: 44697540
+  focal-arm: 44693254
+  centos8-arm: 47272576
+  bookworm-intel: 45619140
+  bullseye-intel: 45877522

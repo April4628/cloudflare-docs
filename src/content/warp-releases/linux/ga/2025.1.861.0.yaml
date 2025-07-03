@@ -15,21 +15,21 @@ releaseDate: 2025-02-19
 packageURL: https://pkg.cloudflareclient.com/
 platformName: Linux
 linuxPlatforms:
-  - bullseye-intel
-  - buster-arm
-  - focal-arm
-  - jammy-arm
-  - centos8-arm
-  - noble-intel
-  - bookworm-arm
-  - centos8-intel
-  - focal-intel
-  - fedora35-intel
-  - bullseye-arm
-  - fedora34-intel
-  - fedora34-arm
-  - bookworm-intel
-  - jammy-intel
-  - fedora35-arm
-  - buster-intel
-  - noble-arm
+  bookworm-arm: 43895200
+  bullseye-arm: 44141880
+  bullseye-intel: 45320692
+  jammy-arm: 43900738
+  buster-intel: 45392296
+  centos8-arm: 46299285
+  focal-intel: 45352992
+  focal-arm: 44181160
+  jammy-intel: 45014766
+  noble-intel: 44909544
+  centos8-intel: 47207704
+  fedora35-intel: 47332262
+  fedora34-intel: 47610680
+  fedora34-arm: 46558268
+  bookworm-intel: 45014218
+  noble-arm: 43992176
+  buster-arm: 44167676
+  fedora35-arm: 46225864
