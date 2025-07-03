@@ -21,6 +21,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 
 - [`docs`](#docs) - Open this page in your default browser.
 - [`init`](#init) - Create a new project from a variety of web frameworks and templates.
+- [`containers`](#containers) - Interact with Containers.
 - [`d1`](#d1) - Interact with D1.
 - [`vectorize`](#vectorize) - Interact with Vectorize indexes.
 - [`hyperdrive`](#hyperdrive) - Manage your Hyperdrives.
@@ -129,6 +130,12 @@ wrangler init [<NAME>] [OPTIONS]
 <Render file="wrangler-commands/global-flags" product="workers" />
 
 ---
+
+## `containers`
+
+Interact with Cloudflare's Container Platform.
+
+<Render file="wrangler-commands/containers" product="workers" />
 
 ## `d1`
 
@@ -1457,6 +1464,8 @@ wrangler versions upload [OPTIONS]
   - Add a version tag. Accepts empty string.
 - `--message` <Type text="string" /> <MetaInfo text="optional" />
   - Add a version message. Accepts empty string.
+- `--preview-alias` <Type text="string" /> <MetaInfo text="optional" />
+  - Creates an alias to this version.
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
