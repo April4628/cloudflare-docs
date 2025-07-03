@@ -2,30 +2,17 @@ import fs from "fs";
 import YAML from "yaml";
 import { marked } from "marked";
 
-const BASE_URL = "https://downloads.cloudflareclient.com/v1/update/json";
+const BASE_URL = "https://downloads.cloudflareclient.com/v1";
 
-const platforms = [
-	"windows",
-	"macos",
-	"noble-intel",
-	"noble-arm",
-	"jammy-intel",
-	"jammy-arm",
-	"focal-intel",
-	"focal-arm",
-	"buster-intel",
-	"buster-arm",
-	"bullseye-intel",
-	"bullseye-arm",
-	"bookworm-intel",
-	"bookworm-arm",
-	"centos8-intel",
-	"centos8-arm",
-	"fedora34-intel",
-	"fedora34-arm",
-	"fedora35-intel",
-	"fedora35-arm",
-];
+const platforms = await fetch(`${BASE_URL}/platforms`)
+	.then((res) => res.json())
+	.then((data) => data.result);
+
+fs.writeFileSync(
+	"./src/util/warp-platforms.json",
+	JSON.stringify(platforms, null, "\t"),
+	"utf-8",
+);
 
 const linesToRemove = [
 	"For related Cloudflare for Teams documentation please see: https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp",
@@ -34,11 +21,11 @@ const linesToRemove = [
 	"For Consumer documentation please see: <https://developers.cloudflare.com/warp-client/>",
 ];
 
-for (const platform of platforms) {
+for (const { platform } of platforms) {
 	const isLinux = platform !== "windows" && platform !== "macos";
 
 	for (const track of ["ga", "beta"]) {
-		fetch(`${BASE_URL}/${platform}/${track}`)
+		fetch(`${BASE_URL}/update/json/${platform}/${track}`)
 			.then((res) => res.json())
 			.then((data) => {
 				if (!data.items) {
@@ -68,14 +55,14 @@ for (const platform of platforms) {
 						if (isLinux) {
 							const existingFile = YAML.parse(fs.readFileSync(path, "utf-8"));
 
-							existingFile.linuxPlatforms ??= [];
+							existingFile.linuxPlatforms ??= {};
 
-							if (!existingFile.linuxPlatforms.includes(platform)) {
+							if (!existingFile.linuxPlatforms[platform]) {
 								console.log(
 									`Adding ${platform} to Linux ${track} ${item.version}.`,
 								);
 
-								existingFile.linuxPlatforms.push(platform);
+								existingFile.linuxPlatforms[platform] = item.packageSize;
 							}
 
 							fs.writeFileSync(path, YAML.stringify(existingFile), "utf-8");
@@ -120,7 +107,9 @@ for (const platform of platforms) {
 							...item,
 							releaseNotes,
 							platformName,
-							linuxPlatforms: isLinux ? [platform] : undefined,
+							linuxPlatforms: isLinux
+								? { [platform]: item.packageSize }
+								: undefined,
 						}),
 						"utf-8",
 					);
