@@ -44,3 +44,24 @@ You may prefer to set up your own code watchers and reloading mechanisms, or mou
 into the local container images to sync code changes. This can be done, but there is no built-in
 mechanism for doing so in Wrangler, and best-practices will depend on the languages and frameworks
 you are using in your container code.
+
+## Troubleshooting
+
+### Exposing Ports
+
+In production, all of your container's ports will be accessible by your Worker,
+so you do not need to specifically expose ports using the [`EXPOSE` instruction](https://docs.docker.com/reference/dockerfile/#expose) in your Dockerfile.
+
+But for local development on non-Linux systems, you most likely need to expose a port to access your container properly; for example: `EXPOSE 4000`.
+
+If you have not exposed any ports, you will see the following type of error when building or pulling your container image:
+
+```text
+The container "MyContainer" does not expose any ports, please expose any port that you want to use with `getTCPPort()`.
+```
+
+And if you call `getTCPPort()` on an unexposed port you will see the following error:
+
+```text
+connect(): Connection refused: container port not found. Make sure you exposed the port in your container definition.
+```
