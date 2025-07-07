@@ -141,10 +141,11 @@ To set up a fallthrough action:
       <Steps>
          1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
          2. Go to **Security** > **Settings**.
-         3. Under **Custom fallthrough rules**, select **Create custom fallthrough rule** to create a custom fallthrough rule with the template.
-         4. Give your rule a descriptive name.
-         5. Choose one or more hostnames from the dropdown menu and select your action.
-         6. Select **Save as draft** to deploy later, or **Deploy** to deploy now.
+         3. Filter by **API abuse**.
+         4. Under **Custom fallthrough rules**, select **Create custom fallthrough rule** to create a custom fallthrough rule with the template.
+         5. Give your rule a descriptive name.
+         6. Choose one or more hostnames from the dropdown menu and select your action.
+         7. Select **Save as draft** to deploy later, or **Deploy** to deploy now.
       </Steps>
    </TabItem>
 </Tabs>
@@ -165,7 +166,7 @@ You can use the `cf.api_gateway.fallthrough_triggered` syntax in your own custom
          3. Go to **Schema Validation** and select the schema in the Schema list.
          4. Check the multi-select box to select the endpoints shown on the current page.
          5. Choose **Select all endpoints**.
-         6. Select **Change Action**.
+         6. Select **Change action**.
          7. Choose an action from the dropdown menu.
          8. Select **Set action**.
       </Steps>
@@ -175,7 +176,7 @@ You can use the `cf.api_gateway.fallthrough_triggered` syntax in your own custom
          1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
          2. Go to **Security** > **Web assets** > **Schema Validation**.
          3. Check the multi-select box to select all endpoints associated with the schema.
-         4. Select **Change Action**.
+         4. Select **Change action**.
          5. Choose an action from the dropdown menu.
          6. Select **Set action**.
       </Steps>
