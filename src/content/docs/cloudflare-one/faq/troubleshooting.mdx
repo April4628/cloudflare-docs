@@ -377,15 +377,12 @@ Cloudflare Access uses a [`CF_Session` cookie](/cloudflare-one/identity/authoriz
 
 ## Long-lived SSH sessions frequently disconnect.
 
-All SSH connections proxied through Cloudflare Gateway, including traffic to [Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) targets, have a maximum expected duration of 10 hours. This is because Gateway terminates connections over 10 hours when releasing service updates; releases are not scheduled and can occur multiple times a week.
+All SSH connections proxied through Cloudflare Gateway, including traffic to [Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) targets, have a maximum guaranteed duration of 10 hours. It is possible for connections to last longer than 10 hours. However, if a connection is active at the time of a Gateway release, Gateway will terminate the connection 10 hours later. Releases are not scheduled and can occur multiple times a week.
 
-To ensure a consistent user experience, we recommend configuring your environment to automatically terminate sessions over 10 hours. For example, you could require users to sign in once a day so that connections do not cut off unexpectedly during the work day. One option is to add [`ControlPersist`](https://man.openbsd.org/ssh_config#ControlPersist) to your personal (`~/.ssh/config`) or global (`/etc/ssh/ssh_config`) SSH client configuration file:
+To prevent long-lived SSH connections from breaking unexpectedly, we recommend terminating sessions on a predefined schedule. For example, you could set an 8-hour idle timeout so that inactive sessions automatically disconnect during off hours. To configure an idle timeout, add the `ChannelTimeout` option to either the SSH server (`/etc/ssh/sshd_config`) or client configuration file (`~/.ssh/config`):
 
 ```txt
-Host *
-    ControlMaster auto
-    ControlPath ~/.ssh/control_sockets/%r@%h:%p
-    ControlPersist 10h
+ChannelTimeout global=8h
 ```
 
-`ControlPersist` will close inactive SSH connections on the client machine after the specified time period.
+Implementing [`ChannelTimeout` on the client side](https://man.openbsd.org/ssh_config#ChannelTimeout) allows users to choose a time that works for them, whereas implementing it on the [server side](https://man.openbsd.org/sshd_config#ChannelTimeout) removes the configuration burden from the end user.
