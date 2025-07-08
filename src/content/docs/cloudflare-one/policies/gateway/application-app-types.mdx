@@ -49,7 +49,7 @@ Gateway sorts applications into the following app type groups:
 
 ### Overlapping hostnames
 
-When you use the Application selector in Gateway policies, actions taken by Gateway will be limited to the specific application defined. Gateway may also log other applications that use the same hostnames, but it will not take action unless the application was matched by the policy. This is most common for vendors with many applications, such as Google or Meta. For example, both the Facebook and Facebook Messenger apps use the `chat-e2ee.facebook.com` hostname. When evaluating traffic to the Facebook Messenger app, Gateway will log both the Facebook and Facebook Messenger apps.
+When you use the Application selector in Gateway policies, actions taken by Gateway will be limited to the specific application defined. Gateway may also log other applications that use the same hostnames, but it will not take action unless the application was matched by the policy. This is most common for vendors with many applications, such as Google or Meta. For example, both the Facebook and Facebook Messenger apps use the `chat-e2ee.facebook.com` hostname. When evaluating traffic to the Facebook Messenger app, Gateway will only take action on Facebook Messenger traffic but log both the Facebook and Facebook Messenger apps.
 
 To ensure Gateway evaluates traffic with your desired precedence, order your most specific policies with the highest priority according to [order of precedence](/cloudflare-one/policies/gateway/order-of-enforcement/#priority-within-a-policy-builder).
 
