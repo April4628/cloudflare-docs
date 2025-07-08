@@ -8,9 +8,44 @@ head:
 
 import { Render } from "~/components";
 
-<Render file="python-workers-beta-packages" product="workers" />
+## Using pywrangler
 
-To import a Python package, add the package name to the `requirements.txt` file within the same directory as your [Wrangler configuration file](/workers/wrangler/configuration/).
+[Pywrangler](https://github.com/cloudflare/workers-py?tab=readme-ov-file#pywrangler) is a CLI tool for managing packages in a Python Workers
+project. By default, it will vendor any packages you have defined in your pyproject.toml file.
+
+To get started, create a pyproject.toml file with the following contents:
+
+```
+[project]
+name = "YourProjectName"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi"
+]
+
+[dependency-groups]
+dev = ["workers-py"]
+```
+
+The above will allow your worker to depend on the [FastAPI](https://fastapi.tiangolo.com/) package.
+
+You can then run `uv run pywrangler sync` to install the packages in your project, in such a way so that they will be deployed along with your
+Worker.
+
+The `pywrangler` CLI also supports all commands supported by the `wrangler` tool, so you can use it to deploy your Worker, add environment variables, etc.
+
+For example, to run your Worker locally, you can run `uv run pywrangler dev`. This will automatically run `sync` for you, so you don't need to do so manually.
+
+## Built-in packages
+
+:::caution[Explicitly defined built-in packages are deprecated]
+
+You can still specify packages in a `cf-requirements.txt` file, but doing so is deprecated. Instead use `pywrangler` to add packages to your Worker as described above.
+:::
+
+To import a Python package, add the package name to the `cf-requirements.txt` file within the same directory as your [Wrangler configuration file](/workers/wrangler/configuration/).
 
 For example, if your Worker depends on [FastAPI](https://fastapi.tiangolo.com/), you would add the following:
 
@@ -18,15 +53,15 @@ For example, if your Worker depends on [FastAPI](https://fastapi.tiangolo.com/),
 fastapi
 ```
 
-## Package versioning
+### Package versioning
 
-In the example above, you likely noticed that there is no explicit version of the Python package declared in `requirements.txt`.
+In the example above, you likely noticed that there is no explicit version of the Python package declared in `cf-requirements.txt`.
 
 In Workers, Python package versions are set via [Compatibility Dates](/workers/configuration/compatibility-dates/) and [Compatibility Flags](/workers/configuration/compatibility-flags/). Given a particular compatibility date, a specific version of the [Pyodide Python runtime](https://pyodide.org/en/stable/project/changelog.html) is provided to your Worker, providing a specific set of Python packages pinned to specific versions.
 
 As new versions of Pyodide and additional Python packages become available in Workers, we will publish compatibility flags and their associated compatibility dates here on this page.
 
-## Supported Packages
+### Supported Packages
 
 A subset of the [Python packages that Pyodide supports](https://pyodide.org/en/latest/usage/packages-in-pyodide.html) are provided directly by the Workers runtime:
 
@@ -80,6 +115,6 @@ A subset of the [Python packages that Pyodide supports](https://pyodide.org/en/l
 
 Looking for a package not listed here? Tell us what you'd like us to support by [opening a discussion on Github](https://github.com/cloudflare/workerd/discussions/new?category=python-packages).
 
-## HTTP Client Libraries
+### HTTP Client Libraries
 
 Only HTTP libraries that are able to make requests asynchronously are supported. Currently, these include [`aiohttp`](https://docs.aiohttp.org/en/stable/index.html) and [`httpx`](https://www.python-httpx.org/). You can also use the [`fetch()` API](/workers/runtime-apis/fetch/) from JavaScript, using Python Workers' [foreign function interface](/workers/languages/python/ffi) to make HTTP requests.
