@@ -56,13 +56,13 @@ But for local development you will need to declare any ports you need to access 
 
 If you have not exposed any ports, you will see the following error in local development:
 
-```text
+```txt
 The container "MyContainer" does not expose any ports. In your Dockerfile, please expose any ports you intend to connect to.
 ```
 
 And if you try to connect to any port that you have not exposed in your `Dockerfile` you will see the following error:
 
-```text
+```txt
 connect(): Connection refused: container port not found. Make sure you exposed the port in your container definition.
 ```
 
