@@ -17,6 +17,12 @@ A canonical example of this would be [Find account and zone ID](/fundamentals/ac
 - We tried explaining with words alone and that did not solve the confusion.
 - It's a task specifically related to new users, where they are less familiar with Cloudflare concepts or navigation patterns.
 
+:::note
+
+Use screenshots liberally in [Changelog entries](/style-guide/documentation-content-strategy/content-types/changelog/), because this content type is an accepted "point-in-time" reference and it's okay for these screenshots to be outdated.
+
+:::
+
 ## Guidelines
 
 Screenshots should:
@@ -28,11 +34,13 @@ Screenshots should:
 - Avoid including visuals that change frequently, such as sidebar navigation.
 - Have descriptive alt text.
 
-## Template
+## Usage
 
 ```mdx
 ![Alt text](~/assets/images/$PRODUCT_NAME/$IMAGE_NAME.png)
 ```
+
+Add screenshots to the corresponsding `$PRODUCT_NAME` folder under [`/src/assets/images/`](https://github.com/cloudflare/cloudflare-docs/tree/production/src/assets/images). You may want to add subfolders for organizational purposes.
 
 ## Maintenance
 
